@@ -1,10 +1,3 @@
-from functools import reduce
-
-
-def concat_helper(str_a, str_b):
-    return str_a.strip() + str_b.strip()
-
-
 def make_dict(header : str):
     header_dict = {}
     split_elm = header.split('\r\n')
