@@ -2,11 +2,13 @@ from src.tcpConn import create_connection, get_http_response
 from src.resolveDNS import resolve_dns
 from src.htmlParser import make_dict
 
-fd = create_connection("neverssl.com")
+domain = "textfiles.com"
+
+fd = create_connection(domain)
 # print(resolve_dns("geeksforgeeks.org"))
 # print(resolve_dns("wikipedia.com"))
 
-response = get_http_response(fd, "neverssl.com")
+response = get_http_response(fd, domain)
 
 print(response)
 

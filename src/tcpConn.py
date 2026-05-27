@@ -1,6 +1,6 @@
 import socket as s 
 from src.resolveDNS import resolve_dns
-from src.htmlParser import make_dict
+from src.htmlParser import make_dict, length_parser, chunk_parser
 
 
 
@@ -56,25 +56,42 @@ def get_http_response(fd : s.socket, domain_name : str, path : str = '/'):
     fd.send(request.encode())
 
     #get first few bits of response
-    response = fd.recv(1024)
+    response = fd.recv(2048)
     str_response = response.decode('utf8')
-    data = str_response.split('\r\n\r\n')
+    # print(response)
+    data = str_response.split('\r\n\r\n', 1)
+    # print(data)
 
     #make a header dictionary
     header, http_response = make_dict(data[0])
 
-    body_len = int(header['Content-Length'])
+    # print(header)
+
+    # body_len = int(header['Content-Length'])
     body = ''
+
+    header_keys = header.keys()
 
     if(len(data) == 2):
         body = body + data[1]
-        body_len = body_len - len(data[1])
 
-    while(body_len > 0):
-        content = fd.recv(4096)
-        read = len(content)
-        body = body + content.decode('utf8')
-        body_len = body_len - read
+    if "Content-Length" in header_keys and "Transfer-Encoding" not in header_keys:
+        body_len = int(header['Content-Length'])
+        body_len = body_len - len(data[1])
+        body = body + length_parser(fd, body_len)
+    
+    elif "Transfer-Encoding" in header_keys and "Content-Length" not in header_keys:
+        if header["Transfer-Encoding"] == "chunked":
+            if "\r\n\r\n" in body:
+                pass
+            else:
+                body = body + chunk_parser(fd)
+
+    else:
+        body_len = int(header['Content-Length'])
+        body = length_parser(fd, body_len)
+
+
 
     http_response["header"] = header
     http_response["body"] = body

@@ -1,3 +1,6 @@
+import socket as s
+
+
 def make_dict(header : str):
     header_dict = {}
     meta_dict = {}
@@ -25,6 +28,31 @@ def make_dict(header : str):
 
 
     return header_dict, meta_dict
+
+
+
+def length_parser(fd:s.socket, body_length):
+    body = ''
+    while(body_length > 0):
+        content = fd.recv(4096)
+        read = len(content)
+        body = body + content.decode('utf8')
+        body_length = body_length - read
+
+    return body
+
+
+def chunk_parser(fd:s.socket):
+    body = ''
+    content = ''
+    while('\r\n\r\n' not in content):
+        content = fd.recv(4096)
+        read = len(content)
+        body = body + content.decode('utf8')
+
+    return body
+
+
 
 
 
