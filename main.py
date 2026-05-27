@@ -1,10 +1,12 @@
-from src.tcpConn import create_connection
+from src.tcpConn import create_connection, get_http_response
 from src.resolveDNS import resolve_dns
 from src.htmlParser import make_dict
 
-response = create_connection("neverssl.com")
+fd = create_connection("neverssl.com")
 # print(resolve_dns("geeksforgeeks.org"))
 # print(resolve_dns("wikipedia.com"))
+
+response = get_http_response(fd, "neverssl.com")
 
 print(response)
 
