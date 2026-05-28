@@ -7,8 +7,6 @@ import re
 domain = "textfiles.com"
 
 fd = create_connection(domain)
-# print(resolve_dns("geeksforgeeks.org"))
-# print(resolve_dns("wikipedia.com"))
 
 response = get_http_response(fd, domain)
 
