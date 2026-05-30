@@ -10,7 +10,12 @@
 - The response structure is clear, status, version, header and body is seperated
 - Lexer working and outputting a token stream according to the grammar
 
-### Next Updates
+### Version 0.1.0
 
-- Build a html DOM tree from the tokens, right now they are flat tokens with no parent child relationship
-- Build normal crawler output and release Minor version 1
+- Minor/toy version done. 
+- Clear parsing ( tag soups handled )
+- Fully traversable structure
+
+### Next updates
+
+- Still on planning, only after next project is done. Next update delayed!
