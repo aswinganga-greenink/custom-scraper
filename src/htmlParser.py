@@ -41,19 +41,122 @@ def length_parser(fd:s.socket, body_length):
     return body
 
 
-def chunk_parser(fd:s.socket):
-    body = ''
-    content = ''
-    while('\r\n\r\n' not in content):
+# def chunk_parser(fd:s.socket):
+#     body = ''
+#     content = ''
+#     while('\r\n\r\n' not in content):
+#         content = fd.recv(4096)
+#         read = len(content)
+#         body = body + content.decode('utf8')
+
+#     return body
+
+
+def chunk_parser(fd: s.socket):
+
+    buffer = b''
+    
+
+    while b'\r\n\r\n' not in buffer:
         content = fd.recv(4096)
-        read = len(content)
-        body = body + content.decode('utf8')
+        
 
-    return body
+        if not content:
+            break
+            
+
+        buffer += content
+
+    return buffer.decode('utf8', errors='ignore')
 
 
-
-def html_parser(tokens : list):
+def html_parser(tokens: list):
     stack = []
     nodes = {}
+    
+    # Major structural tags that should block aggressive stack unwinding
+    scope_tags = ["table", "td", "tr", "th", "tbody", "thead", "body", "html"]
+
+    for i in tokens:
+        if i["type"] == "open_tag":
+            tag_name = i["value"].lower().strip()
+            is_void = i["isvoid"] or tag_name.startswith("!doctype")
+
+            if not is_void:
+                stack.append(i["id"])
+                nodes[stack[-1]] = {
+                    "node_type": "element",
+                    "tag_name": tag_name,
+                    "parent": stack[-2] if len(stack) > 1 else 0,
+                    "child": [],
+                    "closing_at": 0
+                }
+
+                if nodes[stack[-1]]["parent"] > 0:
+                    nodes[stack[-2]]["child"].append(stack[-1])
+            else:
+                nodes[i["id"]] = {
+                    "node_type": "element",
+                    "tag_name": tag_name,
+                    "parent": stack[-1] if stack else 0,
+                    "child": [],
+                    "closing_at": i["id"] 
+                }
+                
+                if stack:
+                    nodes[stack[-1]]["child"].append(i["id"])
+
+        elif i["type"] == "text":
+            nodes[i["id"]] = {
+                "node_type": "raw_text",
+                "parent": stack[-1] if stack else 0,
+                "child": []
+            }
+            if stack:
+                nodes[stack[-1]]["child"].append(i["id"])
+
+        # elif i["type"] == "close_tag":
+        #     close_name = i["value"].lower().strip()
+            
+        #     match_index = -1
+        #     for idx in range(len(stack) - 1, -1, -1):
+        #         target_name = nodes[stack[idx]]["tag_name"]
+                
+        #         if target_name == close_name:
+        #             match_index = idx
+        #             break
+                    
+        #         if target_name in scope_tags and close_name not in scope_tags:
+        #             break
+            
+        #     if match_index != -1:
+        #         nodes[stack[match_index]]["closing_at"] = i["id"]
+        #         stack = stack[:match_index]
+
+        elif i["type"] == "close_tag":
+            close_name = i["value"].lower().strip()
+            
+            match_index = -1
+            for idx in range(len(stack) - 1, -1, -1):
+                target_name = nodes[stack[idx]]["tag_name"]
+                
+                if target_name == close_name:
+                    match_index = idx
+                    break
+                    
+                if target_name in scope_tags and close_name not in scope_tags:
+                    break
+            
+            if match_index != -1:
+
+                nodes[stack[match_index]]["closing_at"] = i["id"]
+
+                for sloppy_idx in range(match_index + 1, len(stack)):
+                    nodes[stack[sloppy_idx]]["closing_at"] = i["id"]
+                
+
+                stack = stack[:match_index]
+
+    return nodes
+
 

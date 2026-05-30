@@ -32,14 +32,11 @@ def attr_tokenizer(tokens: list[dict]):
             
             for key, value in matches:
                 # Assign the value if it exists, otherwise assign an empty string
-                attr_dict[key] = value.strip().strip('"') if value else ""
+                attr_dict[key.lower()] = value.strip().strip('"') if value else ""
                 
             i["attribute"] = attr_dict
             
     return tokens
-
-
-
 
 
 
@@ -69,7 +66,8 @@ def lexer(body : str):
                         "command",
                         "keygen",
                         "menuitem",
-                        "frame" ]
+                        "frame",
+                        "!doctype" ]
 
     while i < length:
         
@@ -88,8 +86,10 @@ def lexer(body : str):
                 "type": "comment",
                 "value": s,
                 "start": start,
-                "end": i
+                "end": i,
+                "id" : id
             })
+            id += 1
 
         # 2. CLOSE TAG
         elif body[i:i+2] == "</":
@@ -123,12 +123,12 @@ def lexer(body : str):
                 i += 1
                 
             i += 1 
-            split_div = s.split(" ", 1)
-            isvoid = True if split_div[0].strip() in self_closing_tags else False
+            split_div = s.split(None, 1)
+            isvoid = True if split_div[0].strip().lower() in self_closing_tags else False
             
             node_list.append({
                 "type": "open_tag",
-                "value": split_div[0],
+                "value": split_div[0].lower().strip(),
                 "attribute": split_div[1] if len(split_div) == 2 else "",
                 "start": start,
                 "end": i,
@@ -153,6 +153,8 @@ def lexer(body : str):
                     "type": "text",
                     "value": s,
                     "start": start,
-                    "end": i
+                    "end": i,
+                    "id" : id
                 })
+                id = id+1
     return node_list
