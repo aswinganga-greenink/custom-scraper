@@ -13,7 +13,6 @@ def make_dict(header : str):
         
 
         elif(len(key_value_list) == 1):
-            # print(key_value_list)
 
             #isolate version, status code, status text from header and the body
 
@@ -54,7 +53,7 @@ def chunk_parser(fd:s.socket):
 
 
 
+def html_parser(tokens : list):
+    stack = []
+    nodes = {}
 
-
-def html_parser(response : str):
-    pass
