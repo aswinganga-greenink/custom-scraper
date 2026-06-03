@@ -5,6 +5,9 @@ from src.htmlParser import make_dict, length_parser, chunk_parser
 
 
 def create_connection(domain_name : str, port : int = 80):
+    """
+    Create a TCP connection with the given domain name
+    """
 
     ips = resolve_dns(domain_name)
 
@@ -22,6 +25,10 @@ def create_connection(domain_name : str, port : int = 80):
 
 
 def get_http_response(fd : s.socket, domain_name : str, path : str = '/'):
+    """
+    Get the HTTP response from the given domain name
+    """
+
     request = f"GET {path} HTTP/1.1\r\nHost:{domain_name}\r\nUser-Agent: Mozilla/5.0\r\n\r\n"
     fd.send(request.encode())
 

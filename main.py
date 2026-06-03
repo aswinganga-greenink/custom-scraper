@@ -1,43 +1,51 @@
 from src.tcpConn import create_connection, get_http_response
 from src.lexer import lexer, attr_tokenizer
-from src.resolveDNS import resolve_dns
 from src.htmlParser import make_dict, html_parser
-import re
+from src.query import get_by_class, get_by_id, get_by_tag
 
 domain = "neverssl.com"
 
-fd = create_connection(domain)
-
+# ── Fetch & parse ────────────────────────────────────────────────────────────
+fd       = create_connection(domain)
 response = get_http_response(fd, domain)
+body     = response["body"]
 
-node_list = lexer(response["body"])
+node_list = lexer(body)
+node_list = attr_tokenizer(node_list)
+nodes     = html_parser(node_list)
 
-updated = attr_tokenizer(node_list)
-nodes = html_parser(updated)
+# ── Query by TAG ─────────────────────────────────────────────────────────────
+print("=" * 60)
+print("get_by_tag('a')")
+print("=" * 60)
+anchors = get_by_tag("a", node_list, nodes, body)
+for el in anchors:
+    print(f"  <{el['tag']}> attrs={el['attributes']}")
+    print(f"  HTML → {el['html'][:120]!r}")
+    print()
 
-# print(updated)
+# ── Query by CLASS ────────────────────────────────────────────────────────────
+# Change "some-class" to any class that appears on the page you're crawling
+print("=" * 60)
+print("get_by_class('some-class')")
+print("=" * 60)
+by_class = get_by_class("some-class", node_list, nodes, body)
+if by_class:
+    for el in by_class:
+        print(f"  <{el['tag']}> attrs={el['attributes']}")
+        print(f"  HTML → {el['html'][:120]!r}")
+        print()
+else:
+    print("  (no elements matched — update the class name above)\n")
 
-# print(nodes)
-
-# print(updated[51])
-
-print(updated)
-
-# for i in node_list:
-#     if i["type"] == "open_tag":
-#         print(i["value"], " : ", i["id"])
-#         for j in node_list:
-#             if nodes[i["id"]]["closing_at"] == j["id"]:
-#                 print(j["value"], " : ", j["id"])
-
-
-for i in node_list:
-    if i["type"] == "open_tag":
-        closer_id = nodes[i["id"]]["closing_at"]
-        
-        if closer_id == i["id"]:
-            print(i["value"], " : SELF-CLOSING")
-        elif closer_id == 0:
-            print(i["value"], " : UNCLOSED")
-        else:
-            print(i["value"], " : ", node_list[closer_id]["value"])
+# ── Query by ID ───────────────────────────────────────────────────────────────
+# Change "some-id" to any id that appears on the page you're crawling
+print("=" * 60)
+print("get_by_id('some-id')")
+print("=" * 60)
+by_id = get_by_id("some-id", node_list, nodes, body)
+if by_id:
+    print(f"  <{by_id['tag']}> attrs={by_id['attributes']}")
+    print(f"  HTML → {by_id['html'][:120]!r}")
+else:
+    print("  (no element matched — update the id above)\n")

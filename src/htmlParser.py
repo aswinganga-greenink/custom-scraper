@@ -2,6 +2,9 @@ import socket as s
 
 
 def make_dict(header : str):
+    """
+    Make a dictionary from the header
+    """
     header_dict = {}
     meta_dict = {}
     split_elm = header.split('\r\n')
@@ -31,6 +34,9 @@ def make_dict(header : str):
 
 
 def length_parser(fd:s.socket, body_length):
+    """
+    Parse the body of the HTTP response based on the content length
+    """
     body = ''
     while(body_length > 0):
         content = fd.recv(4096)
@@ -54,6 +60,10 @@ def length_parser(fd:s.socket, body_length):
 
 def chunk_parser(fd: s.socket):
 
+    """
+    Parse the body of the HTTP response based on the chunked encoding
+    """
+
     buffer = b''
     
 
@@ -71,6 +81,9 @@ def chunk_parser(fd: s.socket):
 
 
 def html_parser(tokens: list):
+    """
+    Parse the tokens into a tree structure
+    """
     stack = []
     nodes = {}
     

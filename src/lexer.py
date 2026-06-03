@@ -15,6 +15,9 @@
 import re
 
 def attr_tokenizer(tokens: list[dict]):
+    """
+    Tokenize the attributes of the open tags
+    """
     # This regex looks for an attribute name, an optional equals sign, 
     # and then grabs the value (whether it's in double quotes, single quotes, or no quotes)
     pattern = re.compile(r'([a-zA-Z0-9_:-]+)(?:\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+))?')
