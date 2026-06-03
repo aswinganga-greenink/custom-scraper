@@ -12,10 +12,11 @@
 
 ### Version 0.1.0
 
-- Minor/toy version done. 
+- Minor/toy version done.
 - Clear parsing ( tag soups handled )
 - Fully traversable structure
 
-### Next updates
+### Version 0.1.1
 
-- Still on planning, only after next project is done. Next update delayed!
+- Adding extractors for tag, class and id
+- Use main for user interaction instead of hardcoding. ( comments provided for understanding )
