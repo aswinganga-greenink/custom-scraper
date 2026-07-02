@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fair-crawler"
-version = "0.3.1"
+version = "0.4.0"
 description = "Fair Crawler — a from-scratch web crawler — HTML lexer, parse tree, OOP DOM query API. No third-party dependencies."
 readme = "README.md"
 requires-python = ">=3.10"

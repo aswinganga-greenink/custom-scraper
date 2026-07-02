@@ -17,14 +17,24 @@ Quickstart::
 """
 
 from faircrawler.http.client import HTTPClient, HTTPResponse
+from faircrawler.http.url import URL
+from faircrawler.http.exceptions import (
+    FairCrawlerError,
+    TooManyRedirectsError,
+    SSLVerificationError,
+)
 from faircrawler.parser import HTMLParser
 from faircrawler.dom import HTMLDocument, HTMLElement
 
-__version__ = "0.3.1"
+__version__ = "0.4.0"
 __all__ = [
     "HTTPClient",
     "HTTPResponse",
+    "URL",
     "HTMLParser",
     "HTMLDocument",
     "HTMLElement",
+    "FairCrawlerError",
+    "TooManyRedirectsError",
+    "SSLVerificationError",
 ]

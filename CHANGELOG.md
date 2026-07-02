@@ -46,3 +46,13 @@
 - **Branding rename**: package renamed from `greenink` → `faircrawler` (company name removed)
 - PyPI package name updated to `fair-crawler`
 - Importable as `from faircrawler import HTTPClient, HTMLParser, HTMLDocument, HTMLElement`
+
+### Version 0.4.0
+
+- **HTTPS support**: `HTTPClient` now wraps the TCP socket with `ssl.create_default_context()` automatically for `https://` URLs
+- **`URL` class** (`faircrawler.http.url`): parses any URL string into `.scheme`, `.host`, `.port`, `.path`, `.is_secure`; resolves relative redirect locations
+- **Redirect following**: `HTTPClient` auto-follows 301/302/303/307/308 with configurable `max_redirects=5`
+- **`verify_ssl=True`** param on `HTTPClient` — set `False` for self-signed certificates
+- **Exception hierarchy** (`faircrawler.http.exceptions`): `FairCrawlerError`, `TooManyRedirectsError`, `SSLVerificationError`, `ConnectionError`
+- **`HTTPResponse.ok`**: `True` if status is 2xx
+- **`HTTPResponse.url`**: the final URL after all redirects
