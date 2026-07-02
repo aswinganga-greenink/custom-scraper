@@ -20,3 +20,12 @@
 
 - Adding extractors for tag, class and id
 - Use main for user interaction instead of hardcoding. ( comments provided for understanding )
+
+### Version 0.2.0
+
+- Introduced OOP DOM layer (`src/dom/`)
+- `HTMLElement` class: wraps a single parsed node, exposes `.tag`, `.attributes`, `.html`, `.text`, `.parent`, `.children`
+- `HTMLDocument` class: builds the full element tree from lexer/parser output via a two-pass algorithm
+- All three selectors (`get_by_tag`, `get_by_class`, `get_by_id`) available both at document level and scoped to any element (chainable queries)
+- `src/query.py` retained for backward compatibility
+- `main.py` updated to demonstrate the new API
