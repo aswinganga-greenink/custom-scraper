@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "greenink-scraper"
+version = "0.3.0"
+description = "A from-scratch web crawler — HTML lexer, parse tree, OOP DOM query API. No third-party dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["web", "scraper", "crawler", "html", "parser", "dom"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+"Homepage"    = "https://github.com/aswinganga-greenink/custom-scraper"
+"Bug Tracker" = "https://github.com/aswinganga-greenink/custom-scraper/issues"
+
+[tool.setuptools.packages.find]
+where     = ["."]
+include   = ["greenink*"]
