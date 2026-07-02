@@ -29,3 +29,14 @@
 - All three selectors (`get_by_tag`, `get_by_class`, `get_by_id`) available both at document level and scoped to any element (chainable queries)
 - `src/query.py` retained for backward compatibility
 - `main.py` updated to demonstrate the new API
+
+### Version 0.3.0
+
+- **HTTPClient** (`greenink.http.client`): raw TCP socket client with timeout support, handles `Content-Length` and `Transfer-Encoding: chunked` responses
+- **HTTPResponse** (`greenink.http.client`): typed wrapper — `.status_code`, `.headers`, `.body`
+- **HTMLParser** (`greenink.parser`): single-call facade — `HTMLParser.parse(html)` → `HTMLDocument`
+- **Package rename**: `src/` → `greenink/` for clean PyPI distribution
+- **`greenink/__init__.py`**: top-level public API — all classes importable from `greenink` directly
+- **`pyproject.toml`**: setuptools build config for PyPI (`greenink-scraper`)
+- **GitHub Actions**: `.github/workflows/publish.yml` — auto-publishes to PyPI on `v*.*.*` tag via OIDC trusted publishing
+- **`main.py`**: reduced to 3-line setup using the clean public API
