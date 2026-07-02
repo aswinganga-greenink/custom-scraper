@@ -1,6 +1,6 @@
 import socket as s 
-from src.resolveDNS import resolve_dns
-from src.htmlParser import make_dict, length_parser, chunk_parser
+from greenink.resolveDNS import resolve_dns
+from greenink.htmlParser import make_dict, length_parser, chunk_parser
 
 
 

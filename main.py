@@ -1,7 +1,7 @@
-from src.tcpConn import create_connection, get_http_response
-from src.lexer import lexer, attr_tokenizer
-from src.htmlParser import html_parser
-from src.dom import HTMLDocument
+from greenink.tcpConn import create_connection, get_http_response
+from greenink.lexer import lexer, attr_tokenizer
+from greenink.htmlParser import html_parser
+from greenink.dom import HTMLDocument
 
 domain = "neverssl.com"
 
