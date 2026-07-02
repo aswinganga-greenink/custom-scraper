@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "greenink-scraper"
-version = "0.3.0"
-description = "A from-scratch web crawler — HTML lexer, parse tree, OOP DOM query API. No third-party dependencies."
+name = "fair-crawler"
+version = "0.3.1"
+description = "Fair Crawler — a from-scratch web crawler — HTML lexer, parse tree, OOP DOM query API. No third-party dependencies."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -28,4 +28,4 @@ classifiers = [
 
 [tool.setuptools.packages.find]
 where     = ["."]
-include   = ["greenink*"]
+include   = ["faircrawler*"]

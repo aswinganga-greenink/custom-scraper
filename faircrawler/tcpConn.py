@@ -1,6 +1,6 @@
 import socket as s 
-from greenink.resolveDNS import resolve_dns
-from greenink.htmlParser import make_dict, length_parser, chunk_parser
+from faircrawler.resolveDNS import resolve_dns
+from faircrawler.htmlParser import make_dict, length_parser, chunk_parser
 
 
 

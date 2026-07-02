@@ -40,3 +40,9 @@
 - **`pyproject.toml`**: setuptools build config for PyPI (`greenink-scraper`)
 - **GitHub Actions**: `.github/workflows/publish.yml` — auto-publishes to PyPI on `v*.*.*` tag via OIDC trusted publishing
 - **`main.py`**: reduced to 3-line setup using the clean public API
+
+### Version 0.3.1
+
+- **Branding rename**: package renamed from `greenink` → `faircrawler` (company name removed)
+- PyPI package name updated to `fair-crawler`
+- Importable as `from faircrawler import HTTPClient, HTMLParser, HTMLDocument, HTMLElement`

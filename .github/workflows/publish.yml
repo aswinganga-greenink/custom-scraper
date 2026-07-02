@@ -50,7 +50,3 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        # Uses PyPI Trusted Publishing (OIDC) — no API token secret needed.
-        # To use a token instead, uncomment and set PYPI_API_TOKEN in repo secrets:
-        # with:
-        #   password: ${{ secrets.PYPI_API_TOKEN }}

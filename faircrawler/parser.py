@@ -1,6 +1,6 @@
-from greenink.lexer import lexer, attr_tokenizer
-from greenink.htmlParser import html_parser
-from greenink.dom import HTMLDocument
+from faircrawler.lexer import lexer, attr_tokenizer
+from faircrawler.htmlParser import html_parser
+from faircrawler.dom import HTMLDocument
 
 
 class HTMLParser:

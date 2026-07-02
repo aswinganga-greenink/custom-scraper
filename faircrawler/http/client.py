@@ -1,7 +1,7 @@
 from __future__ import annotations
 import socket as s
-from greenink.resolveDNS import resolve_dns
-from greenink.htmlParser import make_dict, length_parser, chunk_parser
+from faircrawler.resolveDNS import resolve_dns
+from faircrawler.htmlParser import make_dict, length_parser, chunk_parser
 
 
 class HTTPResponse:
@@ -77,7 +77,7 @@ class HTTPClient:
         request = (
             f"GET {path} HTTP/1.1\r\n"
             f"Host: {domain}\r\n"
-            f"User-Agent: greenink-scraper/0.3\r\n"
+            f"User-Agent: fair-crawler/0.3\r\n"
             f"Connection: close\r\n\r\n"
         )
         fd.send(request.encode())

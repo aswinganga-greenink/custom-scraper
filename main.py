@@ -1,4 +1,4 @@
-from greenink import HTTPClient, HTMLParser
+from faircrawler import HTTPClient, HTMLParser
 
 # ── Configure ─────────────────────────────────────────────────────────────────
 domain = "neverssl.com"
